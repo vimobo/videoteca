@@ -52,6 +52,7 @@ final class Session
     {
         // Etapa 1: solo session_destroy().
         // Etapa 2 (TODO): completar con los 3 pasos del apartado 3.6
+        session_regenerate_id(true);
         session_destroy();
     }
 
