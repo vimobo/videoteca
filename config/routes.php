@@ -12,7 +12,7 @@ Router::add('get', '/', function () {
 });
 
 // Públicas
-Router::add('get',  'login',  [AuthController::class, 'showLogin']);
+Router::add('get',  'showLogin',  [AuthController::class, 'showLogin']);
 Router::add('post', 'login',  [AuthController::class, 'login']);
 Router::add('get',  'logout', [AuthController::class, 'logout']);
 
