@@ -14,7 +14,7 @@ final class PeliculaController
     public function index(): void
     {
         $peliculas = (new PeliculaModel())->all();
-
+        
         (new Pages())->render('pelicula/lista', ['titulo' => 'Catálogo', 'peliculas' => $peliculas]);
     }
 

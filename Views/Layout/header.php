@@ -10,10 +10,11 @@
     <p><a href="<?= e(url('peliculas')) ?>"><strong>Mi videoteca</strong></a></p>
     <nav>
         <ul>
-            <li><a href="<?= e(url('peliculas')) ?>">Catálogo</a></li>
-            <li><a href="<?= e(url('peliculas/mias')) ?>">Mis películas</a></li>
-            <li><a href="<?= e(url('perfil')) ?>">Perfil</a></li>
-            <li><a href="<?= e(url('logout')) ?>">Salir</a></li>
+            <li><a href="<?= e('peliculas') ?>">Catálogo</a></li>
+            <li><a href="<?= e('peliculas/mias') ?>">Mis películas</a></li>
+            <li><a href="<?= e('perfil') ?>">Perfil</a></li>
+            <li><a href="<?= e('logout') ?>">Salir</a></li>
+            <li><a href="<?= e('showLogin') ?>">Login</a></li>
         </ul>
     </nav>
 </header>

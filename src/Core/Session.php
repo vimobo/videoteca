@@ -39,12 +39,12 @@ final class Session
 
     public static function has(string $clave): bool
     {
-        // TODO
+        return isset($_SESSION[$clave]);
     }
 
     public static function remove(string $clave): void
     {
-        // TODO
+        unset($_SESSION[$clave]);
     }
 
     // ---------- Etapa 1 y 2: cierre de sesión ----------
