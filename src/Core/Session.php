@@ -50,12 +50,21 @@ final class Session
     // ---------- Etapa 1 y 2: cierre de sesión ----------
     public static function destruir(): void
     {
-        // Etapa 1: solo session_destroy().
-        // Etapa 2 (TODO): completar con los 3 pasos del apartado 3.6
 
-            Session::regenerar();
-        
-        session_destroy();
+        $_SESSION = []; 
+
+        if (ini_get('session.use_cookies')) { 
+            $p = session_get_cookie_params();
+            setcookie(session_name(), '', [
+                'expires' => time() - 42000,
+                'path' => $p['path'],
+                'domain' => $p['domain'],
+                'secure' => $p['secure'],
+                'httponly' => $p['httponly'],
+                'samesite' => $p['samesite'],
+            ]);
+        }
+        session_destroy(); 
     }
 
 
