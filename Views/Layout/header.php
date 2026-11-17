@@ -14,7 +14,6 @@
             <li><a href="<?= e('peliculas/mias') ?>">Mis películas</a></li>
             <li><a href="<?= e('perfil') ?>">Perfil</a></li>
             <li><a href="<?= e('logout') ?>">Salir</a></li>
-            <li><a href="<?= e('showLogin') ?>">Login</a></li>
         </ul>
     </nav>
 </header>

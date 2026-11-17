@@ -52,13 +52,24 @@ final class Session
     {
         // Etapa 1: solo session_destroy().
         // Etapa 2 (TODO): completar con los 3 pasos del apartado 3.6
-        session_regenerate_id(true);
+
+            Session::regenerar();
+        
         session_destroy();
     }
+
+
 
     // ---------- Etapa 4: regeneración del ID ----------
     public static function regenerar(): void
     {
+        if (!isset($_SESSION['creada'])) {
+            Session::set('creada', time());
+
+        } elseif (time() - $_SESSION['creada'] > 300) { // 5 minutos
+            Session::set('creada', time());
+            session_regenerate_id(true);
+        }
         // TODO: session_regenerate_id(true)
     }
 
