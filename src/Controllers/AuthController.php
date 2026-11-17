@@ -22,6 +22,16 @@ final class AuthController
 
     public function login(): void
     {
+        $user_with_email = (new UserModel())->findByEmail($_POST['email'] ?? '');
+        if (!is_null($user_with_email)) {
+            if (password_verify($_POST['password'] ?? '', $user_with_email['hash'])) {
+                Session::set('user_id', $user_with_email['id']);
+                redirect('perfil');
+            } else {
+                (new Pages())->render('auth/login', ['error' => null, 'info' => null]);
+            }
+        }
+
         // TODO (Etapa 2): leer 'email' y 'password' de $_POST
         // TODO: buscar el usuario con (new UserModel())->findByEmail()
         // TODO: comprobar la contraseña con password_verify()
@@ -34,5 +44,7 @@ final class AuthController
     public function logout(): void
     {
         // TODO (Etapa 2): Session::destruir() y redirect('login')
+        Session::destruir();
+        redirect('login');
     }
 }
