@@ -16,6 +16,22 @@ final class Session
             return;
         }
 
+        $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        ini_set('session.use_strict_mode', '1');
+        ini_set('session.use_only_cookies', '1');
+        ini_set('session.use_trans_sid', '0');
+        // El prefijo __Host- exige HTTPS; en desarrollo (http) usamos un
+        // nombre normal
+        session_name($https ? '__Host-SID' : 'SID');
+        session_set_cookie_params([
+            'lifetime' => 0,
+            'path' => '/',
+            'domain' => '',
+            'secure' => $https,
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+
         // TODO (Etapa 4, Exp. B): ini_set de use_strict_mode,
         //      use_only_cookies y use_trans_sid
         // TODO (Etapa 4, Exp. B): detectar HTTPS dinámicamente
@@ -85,13 +101,15 @@ final class Session
     // ---------- Etapa 5: mensajes flash ----------
     public static function setFlash(string $clave, string $mensaje): void
     {
-        // TODO: guardarlo dentro de $_SESSION['_flash'][$clave]
+        $_SESSION['_flash'][$clave] = $mensaje;
     }
 
     public static function getFlash(string $clave): ?string
     {
-        // TODO: devolver el mensaje Y borrarlo en el mismo instante
-        return null;
+        $mensaje = $_SESSION['_flash'][$clave];
+        unset($_SESSION['_flash'][$clave]);
+
+        return $mensaje;
     }
 
     // ---------- Etapa 6: caducidad por inactividad ----------

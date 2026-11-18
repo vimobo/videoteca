@@ -3,6 +3,7 @@
 
 use Controllers\AuthController;
 use Controllers\PeliculaController;
+use Middlewares\AuthMiddleware;
 use Controllers\UserController;
 use Core\Router;
 
@@ -12,12 +13,12 @@ Router::add('get', '/', function () {
 });
 
 // Públicas
-Router::add('get',  'login',  [AuthController::class, 'showLogin']);
-Router::add('post', 'login',  [AuthController::class, 'login']);
-Router::add('get',  'logout', [AuthController::class, 'logout']);
+Router::add('get',  'login',  AuthMiddleware::proteger([AuthController::class, 'showLogin']));
+Router::add('post', 'login',  AuthMiddleware::proteger([AuthController::class, 'login']));
+Router::add('get',  'logout', AuthMiddleware::proteger([AuthController::class, 'logout']));
 
 // Privadas (solo autenticados)
 // Etapa 3: envolved cada una con AuthMiddleware::proteger([...])
-Router::add('get', 'perfil',         [UserController::class,     'perfil']);
-Router::add('get', 'peliculas',      [PeliculaController::class, 'index']);
-Router::add('get', 'peliculas/mias', [PeliculaController::class, 'mias']);
+Router::add('get', 'perfil',         AuthMiddleware::proteger([UserController::class,     'perfil']));
+Router::add('get', 'peliculas',      AuthMiddleware::proteger([PeliculaController::class, 'index']));
+Router::add('get', 'peliculas/mias', AuthMiddleware::proteger([PeliculaController::class, 'mias']));
