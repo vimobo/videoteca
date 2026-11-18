@@ -88,14 +88,16 @@ final class Session
     // ---------- Etapa 4: regeneración del ID ----------
     public static function regenerar(): void
     {
+        session_regenerate_id(true);
+        //Session::destruir();
+        /*
         if (!isset($_SESSION['creada'])) {
             Session::set('creada', time());
 
         } elseif (time() - $_SESSION['creada'] > 300) { // 5 minutos
             Session::set('creada', time());
-            session_regenerate_id(true);
         }
-        // TODO: session_regenerate_id(true)
+        // TODO: session_regenerate_id(true)*/
     }
 
     // ---------- Etapa 5: mensajes flash ----------

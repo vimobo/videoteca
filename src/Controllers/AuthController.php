@@ -22,9 +22,11 @@ final class AuthController
 
     public function login(): void
     {
+
         $user_with_email = (new UserModel())->findByEmail($_POST['email'] ?? '');
         if (!is_null($user_with_email)) {
             if (password_verify($_POST['password'] ?? '', $user_with_email['hash'])) {
+                Session::regenerar();
                 Session::set('user_id', $user_with_email['id']);
                 redirect('perfil');
             } else {

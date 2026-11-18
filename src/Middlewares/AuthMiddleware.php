@@ -20,9 +20,10 @@ final class AuthMiddleware
 
     public function handle(): void
     {
-        if (!Session::has('user_id'))
-        {
-            redirect('login');
+        if (!Session::has('user_id')) {
+            if ($_SERVER['REQUEST_URI'] !== '/login') {
+                redirect('login');
+            }
         }
         // TODO: si no existe 'user_id' en la sesión:
         //       - dejar un flash (Etapa 5): «Debes iniciar sesión para ver esta página»
