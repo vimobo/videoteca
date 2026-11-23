@@ -17,35 +17,31 @@ final class AuthController
     // y pasadlos a la vista (la vista no accede a Session).
     public function showLogin(): void
     {
-        (new Pages())->render('auth/login', ['error' => null, 'info' => null]);
+        $error = Session::getFlash('error');
+        $info  = Session::getFlash('info');
+        (new Pages())->render('auth/login', ['error' => $error, 'info' => $info]);
     }
 
     public function login(): void
     {
 
         $user_with_email = (new UserModel())->findByEmail($_POST['email'] ?? '');
-        if (!is_null($user_with_email)) {
-            if (password_verify($_POST['password'] ?? '', $user_with_email['hash'])) {
-                Session::regenerar();
-                Session::set('user_id', $user_with_email['id']);
-                redirect('perfil');
-            } else {
-                (new Pages())->render('auth/login', ['error' => null, 'info' => null]);
-            }
+
+        if (!is_null($user_with_email) && password_verify($_POST['password'] ?? '', $user_with_email['hash'])) {
+            Session::regenerar();
+            Session::set('user_id', $user_with_email['id']);
+            Session::set('ultima_actividad', time());
+            redirect('perfil');
         }
 
-        // TODO (Etapa 2): leer 'email' y 'password' de $_POST
-        // TODO: buscar el usuario con (new UserModel())->findByEmail()
-        // TODO: comprobar la contraseña con password_verify()
-        // TODO: si es correcta -> Session::set('user_id', ...) y redirect('perfil')
-        //       (Etapa 4: llamad antes a Session::regenerar())
-        // TODO: si falla -> redirect('login')
-        //       (mismo comportamiento si el correo no existe que si la contraseña es incorrecta)
+        Session::setFlash('error', 'Usuario o contraseña incorrectos');
+        redirect('login');
     }
 
     public function logout(): void
     {
         // TODO (Etapa 2): Session::destruir() y redirect('login')
+        Session::setFlash('info', 'Session closed. Goobye');
         Session::destruir();
         redirect('login');
     }

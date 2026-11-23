@@ -13,8 +13,8 @@ Router::add('get', '/', function () {
 });
 
 // Públicas
-Router::add('get',  'login',  AuthMiddleware::proteger([AuthController::class, 'showLogin']));
-Router::add('post', 'login',  AuthMiddleware::proteger([AuthController::class, 'login']));
+Router::add('get',  'login',  [AuthController::class, 'showLogin']);
+Router::add('post', 'login',  [AuthController::class, 'login']);
 Router::add('get',  'logout', AuthMiddleware::proteger([AuthController::class, 'logout']));
 
 // Privadas (solo autenticados)
