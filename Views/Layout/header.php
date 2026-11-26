@@ -7,13 +7,13 @@
 </head>
 <body>
 <header>
-    <p><a href="<?= e(url('peliculas')) ?>"><strong>Mi videoteca</strong></a></p>
+    <p><a href="<?='peliculas'?>"><strong>Mi videoteca</strong></a></p>
     <nav>
         <ul>
-            <li><a href="<?= e('peliculas') ?>">Catálogo</a></li>
-            <li><a href="<?= e('peliculas/mias') ?>">Mis películas</a></li>
-            <li><a href="<?= e('perfil') ?>">Perfil</a></li>
-            <li><a href="<?= e('logout') ?>">Salir</a></li>
+            <li><a href="<?= BASE_URL . ('peliculas') ?>">Catálogo</a></li>
+            <li><a href="<?= BASE_URL . ('peliculas/mias') ?>">Mis películas</a></li>
+            <li><a href="<?= BASE_URL . ('perfil') ?>">Perfil</a></li>
+            <li><a href="<?= BASE_URL . ('logout') ?>">Salir</a></li>
         </ul>
     </nav>
 </header>
